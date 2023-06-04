@@ -5,6 +5,7 @@ import cookie from 'js-cookie'
 import { api } from '@/lib/axios'
 import { User } from 'lucide-react'
 import Image from 'next/image'
+import { RegisterCustomerModal } from './RegisterCustomerModal'
 
 interface Customer {
   id: string
@@ -17,6 +18,7 @@ interface Customer {
 
 export function Customers() {
   const [customers, setCustomers] = useState<Customer[]>([])
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const [loading, setLoading] = useState(true)
 
   async function loadCustomers() {
@@ -45,45 +47,59 @@ export function Customers() {
   }
 
   return (
-    <div className="mr-8 rounded-lg border border-zinc-200 p-4">
-      <table className="min-w-full table-auto p-8 text-sm">
-        <thead>
-          <tr className="text-sm text-zinc-600">
-            <th className="px-4 py-2 text-left">Nome</th>
-            <th className="px-4 py-2 text-left">E-mail</th>
-            <th className="px-4 py-2 text-left">Telefone</th>
-            <th className="px-4 py-2 text-left">Endereço</th>
-          </tr>
-        </thead>
-        <tbody>
-          {customers.map((customer) => (
-            <tr key={customer.id}>
-              <td className=" px-4 py-2 text-left">
-                <div className="flex items-center gap-2">
-                  {customer.avatarUrl ? (
-                    <Image
-                      src={customer.avatarUrl}
-                      width={24}
-                      height={24}
-                      alt=""
-                      className="h-8 w-8 rounded-full"
-                    />
-                  ) : (
-                    <div className="flex h-6 w-6 items-center justify-center rounded-full border border-zinc-400 bg-zinc-200">
-                      <User className="h-4 w-4 text-zinc-400" />
-                    </div>
-                  )}
+    <div className="mr-8 space-y-2 text-right">
+      <RegisterCustomerModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
 
-                  <div className="text-xs font-medium">{customer.name}</div>
-                </div>
-              </td>
-              <td className=" px-4 py-2 text-left">{customer.email}</td>
-              <td className=" px-4 py-2 text-left">{customer.phone}</td>
-              <td className=" px-4 py-2 text-left">{customer.address}</td>
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="rounded-lg bg-orange-500 p-2 text-sm font-semibold text-white transition-colors hover:bg-orange-600"
+      >
+        Cadastrar cliente
+      </button>
+
+      <div className="rounded-lg border border-zinc-200 p-4">
+        <table className="min-w-full table-auto p-8 text-sm">
+          <thead>
+            <tr className="text-sm text-zinc-600">
+              <th className="px-4 py-2 text-left">Nome</th>
+              <th className="px-4 py-2 text-left">E-mail</th>
+              <th className="px-4 py-2 text-left">Telefone</th>
+              <th className="px-4 py-2 text-left">Endereço</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {customers.map((customer) => (
+              <tr key={customer.id}>
+                <td className=" px-4 py-2 text-left">
+                  <div className="flex items-center gap-2">
+                    {customer.avatarUrl ? (
+                      <Image
+                        src={customer.avatarUrl}
+                        width={24}
+                        height={24}
+                        alt=""
+                        className="h-8 w-8 rounded-full"
+                      />
+                    ) : (
+                      <div className="flex h-6 w-6 items-center justify-center rounded-full border border-zinc-400 bg-zinc-200">
+                        <User className="h-4 w-4 text-zinc-400" />
+                      </div>
+                    )}
+
+                    <div className="text-xs font-medium">{customer.name}</div>
+                  </div>
+                </td>
+                <td className=" px-4 py-2 text-left">{customer.email}</td>
+                <td className=" px-4 py-2 text-left">{customer.phone}</td>
+                <td className=" px-4 py-2 text-left">{customer.address}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }

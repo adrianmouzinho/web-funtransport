@@ -6,11 +6,6 @@ import { Rentals } from '@/components/Rentals'
 import { Status } from '@/components/Status'
 import { api } from '@/lib/axios'
 
-// interface Category {
-//   id: string
-//   name: string
-// }
-
 const status = [
   {
     id: 1,

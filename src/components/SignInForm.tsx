@@ -16,7 +16,7 @@ const signInUserFormSchema = z.object({
     .nonempty('O e-mail é obrigatório')
     .email('Formato de e-mail inváido')
     .toLowerCase(),
-  password: z.string().min(3, 'A senha precisa de no mínimo 3 caracteres'),
+  password: z.string().min(6, 'A senha precisa de no mínimo 6 caracteres'),
 })
 
 type SignInUserFormData = z.infer<typeof signInUserFormSchema>
