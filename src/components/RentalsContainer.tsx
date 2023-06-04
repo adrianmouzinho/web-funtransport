@@ -1,17 +1,28 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import cookie from 'js-cookie'
 import { Rentals } from '@/components/Rentals'
 import { Status } from '@/components/Status'
+import { api } from '@/lib/axios'
 
-const categories = [
+// interface Category {
+//   id: string
+//   name: string
+// }
+
+const status = [
+  {
+    id: 1,
+    name: 'Todos',
+  },
   {
     id: 2,
-    name: 'Ativo',
+    name: 'Pendente',
   },
   {
     id: 3,
-    name: 'Pendente',
+    name: 'Ativo',
   },
   {
     id: 4,
@@ -23,68 +34,78 @@ const categories = [
   },
 ]
 
-const rentalsMock = [
-  {
-    id: 1,
-    customerName: 'Willame Mouzinho',
-    status: 'Ativo',
-    duration: 60,
-    customerEmail: 'willame.mouzinho@gmail.com',
-  },
-  {
-    id: 2,
-    customerName: 'Lailla Galeno',
-    status: 'Ativo',
-    duration: 60,
-    customerEmail: 'lailla.galeno@gmail.com',
-  },
-  {
-    id: 3,
-    customerName: 'Matheus Araujo',
-    status: 'Pendente',
-    duration: 60,
-    customerEmail: 'matheus.araujo@gmail.com',
-  },
-  {
-    id: 4,
-    customerName: 'Thiago Aquino',
-    status: 'Concluído',
-    duration: 60,
-    customerEmail: 'thiago.aquino@gmail.com',
-  },
-  {
-    id: 5,
-    customerName: 'Bruna Silva',
-    status: 'Cancelado',
-    duration: 60,
-    customerEmail: 'bruna.silva@gmail.com',
-  },
-]
+interface Rental {
+  id: string
+  code: string
+  createdAt: string
+  status: string
+  duration: number
+  price: number
+}
 
 export function RentalsContainer() {
   const [activeStatus, setActiveStatus] = useState('Todos')
-  const [rentals, setRentals] = useState(rentalsMock)
+  const [rentals, setRentals] = useState<Rental[]>([])
+  const [loading, setLoading] = useState(true)
 
-  function handleChangeStatus(status: string) {
-    setActiveStatus(status)
+  async function loadRentals() {
+    try {
+      const token = cookie.get('token')
 
-    if (status === 'Todos') {
-      setRentals(rentalsMock)
-      return
+      const response = await api.get('/rentals', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+
+      setRentals(response.data)
+    } catch (error) {
+      console.log(error)
     }
+  }
 
-    setRentals(rentalsMock.filter((rental) => rental.status === status))
+  useEffect(() => {
+    loadRentals()
+    setLoading(false)
+  }, [])
+
+  async function handleChangeStatus(status: string) {
+    setActiveStatus(status)
+    setLoading(true)
+
+    const token = cookie.get('token')
+
+    const router =
+      status === 'Todos' || !status ? '/rentals' : `/rentals?status=${status}`
+
+    try {
+      const { data } = await api.get(router, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+
+      setRentals(data)
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+    }
   }
 
   return (
-    <main>
+    <main className="mr-8 space-y-8">
       <Status
         activeStatus={activeStatus}
         onChangeStatus={handleChangeStatus}
-        status={categories}
+        status={status}
       />
 
-      <Rentals rentals={rentals} />
+      {loading ? (
+        <p className="mt-4 text-center">Carregando...</p>
+      ) : (
+        <Rentals rentals={rentals} />
+      )}
     </main>
   )
 }

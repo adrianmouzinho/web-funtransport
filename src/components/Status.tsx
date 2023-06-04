@@ -9,28 +9,24 @@ interface StatusProps {
 
 export function Status({ status, onChangeStatus, activeStatus }: StatusProps) {
   return (
-    <div className="flex items-center gap-3 p-4 text-sm">
-      <button
-        onClick={() => onChangeStatus('Todos')}
-        className={`rounded-full px-3 py-1 transition-all ${
-          activeStatus === 'Todos' && 'bg-orange-500 text-white'
-        }`}
-      >
-        Todos
-      </button>
-      {status.map((status) => {
-        return (
-          <button
-            key={status.id}
-            onClick={() => onChangeStatus(status.name)}
-            className={`rounded-full px-3 py-1 transition-all ${
-              status.name === activeStatus && 'bg-orange-500 text-white'
-            }`}
-          >
-            {status.name}
-          </button>
-        )
-      })}
+    <div className="space-y-2">
+      <span className="text-sm font-semibold">Filtros</span>
+
+      <div className="flex items-center gap-2 text-sm">
+        {status.map((status) => {
+          return (
+            <button
+              key={status.id}
+              onClick={() => onChangeStatus(status.name)}
+              className={`rounded-md px-3 py-1 transition-all hover:bg-orange-100 hover:text-black ${
+                status.name === activeStatus && 'bg-orange-500 text-white'
+              }`}
+            >
+              {status.name}
+            </button>
+          )
+        })}
+      </div>
     </div>
   )
 }

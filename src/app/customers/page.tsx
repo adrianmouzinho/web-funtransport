@@ -1,9 +1,9 @@
 import { cookies } from 'next/headers'
-import { RentalsContainer } from '@/components/RentalsContainer'
 import { redirect } from 'next/navigation'
 import { Header } from '@/components/Header'
+import { Customers as CustomersContainer } from '@/components/Customers'
 
-export default function Home() {
+export default async function Customers() {
   const isAuthenticated = cookies().get('token')?.value
 
   if (!isAuthenticated) {
@@ -12,9 +12,9 @@ export default function Home() {
 
   return (
     <div>
-      <Header title="Aluguéis" />
+      <Header title="Clientes" />
 
-      <RentalsContainer />
+      <CustomersContainer />
     </div>
   )
 }
