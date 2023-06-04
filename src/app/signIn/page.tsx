@@ -1,8 +1,16 @@
 import Image from 'next/image'
+import { cookies } from 'next/headers'
 import { SignInForm } from '@/components/SignInForm'
 import logo from '@/assets/logo.svg'
+import { redirect } from 'next/navigation'
 
 export default function SignIn() {
+  const isAuthenticated = cookies().get('token')?.value
+
+  if (isAuthenticated) {
+    return redirect('/')
+  }
+
   return (
     <div className="absolute left-0 top-0 h-screen w-screen bg-zinc-50">
       <div className="flex h-full w-full items-center justify-center">

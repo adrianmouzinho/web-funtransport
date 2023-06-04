@@ -6,8 +6,6 @@ import { Header } from '@/components/Header'
 export default function Home() {
   const isAuthenticated = cookies().get('token')?.value
 
-  console.log({ isAuthenticated })
-
   if (!isAuthenticated) {
     return redirect('/signIn')
   }
