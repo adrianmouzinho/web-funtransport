@@ -1,5 +1,6 @@
 import { formatDate } from '@/lib/formatDate'
 import { formatPrice } from '@/lib/formatPrice'
+import dayjs from 'dayjs'
 
 type RentalsProps = {
   rentals: {
@@ -42,7 +43,11 @@ export function Rentals({ rentals }: RentalsProps) {
                 {formatDate(rental.createdAt)}
               </td>
               <td className=" px-4 py-2 text-left">
-                {formatDate(rental.createdAt)}
+                {formatDate(
+                  dayjs(rental.createdAt)
+                    .add(rental.duration, 'minute')
+                    .toISOString(),
+                )}
               </td>
               <td className=" px-4 py-2 text-left">
                 <span
