@@ -42,6 +42,10 @@ export function Products() {
     setLoading(false)
   }, [])
 
+  function handleCreateProduct(product: Product) {
+    setProducts((prevState) => prevState.concat(product))
+  }
+
   if (loading) {
     return <p className="mt-4 text-center">Carregando...</p>
   }
@@ -51,6 +55,7 @@ export function Products() {
       <RegisterProductModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        onCreateProduct={handleCreateProduct}
       />
 
       <button
@@ -63,12 +68,12 @@ export function Products() {
       <div className="rounded-lg border border-zinc-200 p-4">
         <table className="min-w-full table-auto p-8 text-sm">
           <thead>
-            <tr className="text-sm text-zinc-600">
-              <th className="px-4 py-2 text-left">Modelo</th>
-              <th className="px-4 py-2 text-left">Marca</th>
-              <th className="px-4 py-2 text-left">Cor</th>
-              <th className="px-4 py-2 text-left">Tamanho</th>
-              <th className="px-4 py-2 text-left">Status</th>
+            <tr className="text-xs text-zinc-600">
+              <th className="px-4 py-2 text-left uppercase">Modelo</th>
+              <th className="px-4 py-2 text-left uppercase">Marca</th>
+              <th className="px-4 py-2 text-left uppercase">Cor</th>
+              <th className="px-4 py-2 text-left uppercase">Tamanho</th>
+              <th className="px-4 py-2 text-left uppercase">Status</th>
             </tr>
           </thead>
           <tbody>

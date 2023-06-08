@@ -42,6 +42,10 @@ export function Customers() {
     setLoading(false)
   }, [])
 
+  function handleCreateCustomer(customer: Customer) {
+    setCustomers((prevState) => prevState.concat(customer))
+  }
+
   if (loading) {
     return <p className="mt-4 text-center">Carregando...</p>
   }
@@ -51,6 +55,7 @@ export function Customers() {
       <RegisterCustomerModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        onCreateCustomer={handleCreateCustomer}
       />
 
       <button
@@ -63,11 +68,11 @@ export function Customers() {
       <div className="rounded-lg border border-zinc-200 p-4">
         <table className="min-w-full table-auto p-8 text-sm">
           <thead>
-            <tr className="text-sm text-zinc-600">
-              <th className="px-4 py-2 text-left">Nome</th>
-              <th className="px-4 py-2 text-left">E-mail</th>
-              <th className="px-4 py-2 text-left">Telefone</th>
-              <th className="px-4 py-2 text-left">Endereço</th>
+            <tr className="text-xs text-zinc-600">
+              <th className="px-4 py-2 text-left uppercase">Nome</th>
+              <th className="px-4 py-2 text-left uppercase">E-mail</th>
+              <th className="px-4 py-2 text-left uppercase">Telefone</th>
+              <th className="px-4 py-2 text-left uppercase">Endereço</th>
             </tr>
           </thead>
           <tbody>

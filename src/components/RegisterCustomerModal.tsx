@@ -24,9 +24,19 @@ const registerCustomerFormSchema = z.object({
 
 type RegisterCustomerFormData = z.infer<typeof registerCustomerFormSchema>
 
+interface Customer {
+  id: string
+  name: string
+  email: string
+  avatarUrl: string
+  address: string
+  phone: string
+}
+
 interface ConfirmReturnModalProps {
   isOpen: boolean
   onClose: () => void
+  onCreateCustomer: (customer: Customer) => void
 }
 
 export function RegisterCustomerModal({

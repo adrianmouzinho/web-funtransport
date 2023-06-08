@@ -53,7 +53,7 @@ export function SignInForm() {
 
       setLoading(false)
 
-      return router.push('/')
+      return router.refresh()
     } catch (error: any) {
       setLoading(false)
 

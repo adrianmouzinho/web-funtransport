@@ -20,9 +20,20 @@ const registerProductFormSchema = z.object({
 
 type RegisterProductFormData = z.infer<typeof registerProductFormSchema>
 
+interface Product {
+  id: string
+  brand: string
+  model: string
+  coverUrl: string
+  color: string
+  size: number
+  status: string
+}
+
 interface ConfirmReturnModalProps {
   isOpen: boolean
   onClose: () => void
+  onCreateProduct: (product: Product) => void
 }
 
 interface Color {
