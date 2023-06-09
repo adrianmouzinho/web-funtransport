@@ -42,6 +42,7 @@ interface ConfirmReturnModalProps {
 export function RegisterCustomerModal({
   isOpen,
   onClose,
+  onCreateCustomer,
 }: ConfirmReturnModalProps) {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
@@ -92,7 +93,7 @@ export function RegisterCustomerModal({
     setLoading(true)
 
     try {
-      await api.post('/customers', {
+      const response = await api.post('/customers', {
         name,
         cpf,
         address,
@@ -101,7 +102,11 @@ export function RegisterCustomerModal({
         password,
       })
 
+      const customer = response.data as Customer
+
       setLoading(false)
+
+      onCreateCustomer(customer)
 
       onClose()
 

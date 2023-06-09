@@ -60,6 +60,7 @@ interface Supplier {
 export function RegisterProductModal({
   isOpen,
   onClose,
+  onCreateProduct,
 }: ConfirmReturnModalProps) {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
@@ -153,7 +154,7 @@ export function RegisterProductModal({
     try {
       const token = cookie.get('token')
 
-      await api.post(
+      const response = await api.post(
         '/products',
         {
           model,
@@ -173,7 +174,11 @@ export function RegisterProductModal({
         },
       )
 
+      const product = response.data as Product
+
       setLoading(false)
+
+      onCreateProduct(product)
 
       onClose()
 
