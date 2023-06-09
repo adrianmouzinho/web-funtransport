@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-zinc-50`}>
+      <body className={`${inter.className} overflow-x-hidden bg-zinc-50`}>
         {isAuthenticated ? (
           <div className="grid min-h-screen w-screen grid-cols-[304px_auto]">
             <Sidebar />

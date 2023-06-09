@@ -86,7 +86,7 @@ export function Products() {
                       width={64}
                       height={64}
                       alt=""
-                      className="h-16 w-16 rounded"
+                      className="h-16 w-16 rounded border border-zinc-200 bg-white"
                     />
                     <span>{product.model}</span>
                   </div>
@@ -95,7 +95,7 @@ export function Products() {
                 <td className=" px-4 py-2 text-left">
                   <div
                     style={{ backgroundColor: `${product.color}` }}
-                    className={`h-5 w-5 rounded`}
+                    className={`h-5 w-5 rounded border border-zinc-200`}
                   />
                 </td>
                 <td className=" px-4 py-2 text-left">{product.size}</td>
