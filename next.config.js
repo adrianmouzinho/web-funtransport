@@ -5,6 +5,7 @@ const nextConfig = {
     domains: [
       'cdn.shopify.com',
       'm.media-amazon.com',
+      'drive.google.com',
       'localhost',
       '192.168.1.125',
     ],
