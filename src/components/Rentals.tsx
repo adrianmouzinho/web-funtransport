@@ -40,14 +40,18 @@ export function Rentals({ rentals }: RentalsProps) {
                 {formatPrice(rental.price / 100)}
               </td>
               <td className=" px-4 py-2 text-left">
-                {formatDate(rental.createdAt)}
+                {rental.status === 'Pendente'
+                  ? 'Aguardando retirada'
+                  : formatDate(rental.createdAt)}
               </td>
               <td className=" px-4 py-2 text-left">
-                {formatDate(
-                  dayjs(rental.createdAt)
-                    .add(rental.duration, 'minute')
-                    .toISOString(),
-                )}
+                {rental.status === 'Pendente'
+                  ? 'Aguardando retirada'
+                  : formatDate(
+                      dayjs(rental.createdAt)
+                        .add(rental.duration, 'minute')
+                        .toISOString(),
+                    )}
               </td>
               <td className=" px-4 py-2 text-left">
                 <span
