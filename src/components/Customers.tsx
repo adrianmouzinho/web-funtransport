@@ -51,7 +51,7 @@ export function Customers() {
   }
 
   return (
-    <div className="mr-8 space-y-2 text-right">
+    <div className="mb-8 mr-8 space-y-2 text-right">
       <RegisterCustomerModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

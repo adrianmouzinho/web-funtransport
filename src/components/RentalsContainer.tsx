@@ -89,7 +89,7 @@ export function RentalsContainer() {
   }
 
   return (
-    <main className="mr-8 space-y-8">
+    <main className="mb-8 mr-8 space-y-8">
       <Status
         activeStatus={activeStatus}
         onChangeStatus={handleChangeStatus}
