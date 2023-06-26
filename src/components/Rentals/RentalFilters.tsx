@@ -7,7 +7,11 @@ interface StatusProps {
   activeStatus: string
 }
 
-export function Status({ status, onChangeStatus, activeStatus }: StatusProps) {
+export function RentalFilters({
+  status,
+  onChangeStatus,
+  activeStatus,
+}: StatusProps) {
   return (
     <div className="space-y-2">
       <span className="text-sm font-semibold">Filtros</span>

@@ -5,9 +5,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useSelectedLayoutSegment } from 'next/navigation'
 import { useState } from 'react'
-import { ConfirmPickupModal } from './ConfirmPickupModal'
-import { ConfirmRentalReturn } from './ConfirmRentalReturn'
 import logo from '@/assets/logo.svg'
+import { ConfirmPickupModal } from './Rentals/ConfirmPickupModal'
+import { ConfirmReturnModal } from './Rentals/ConfirmReturnModal'
 
 export function Sidebar() {
   const [isConfirmPickupModalOpen, setIsConfirmPickupModalOpen] =
@@ -27,18 +27,18 @@ export function Sidebar() {
   }
 
   return (
-    <aside className="sticky top-0 flex h-full max-h-screen items-center justify-center overflow-hidden">
+    <aside className="sticky top-0 flex h-full max-h-screen items-center justify-center overflow-hidden py-6">
       <ConfirmPickupModal
         isOpen={isConfirmPickupModalOpen}
         onClose={() => setIsConfirmPickupModalOpen(false)}
       />
 
-      <ConfirmRentalReturn
+      <ConfirmReturnModal
         isOpen={isConfirmReturnModalOpen}
         onClose={() => setIsConfirmReturnModalOpen(false)}
       />
 
-      <div className="flex h-full max-h-[564px] w-full max-w-[240px] flex-col justify-between rounded-lg border border-zinc-200 p-6">
+      <div className="flex h-full w-full max-w-[240px] flex-col justify-between rounded-lg border border-zinc-200 p-6">
         <div className="space-y-4">
           <Image src={logo} alt="Logo da Funtransport" />
 

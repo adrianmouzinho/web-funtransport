@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from 'react'
 import cookie from 'js-cookie'
-import { Rentals } from '@/components/Rentals'
-import { Status } from '@/components/Status'
 import { api } from '@/lib/axios'
+import { RentalFilters } from './RentalFilters'
+import { RentalsTable } from './RentalsTable'
 
-const status = [
+const rentalStatus = [
   {
     id: 1,
     name: 'Todos',
@@ -38,7 +38,7 @@ interface Rental {
   price: number
 }
 
-export function RentalsContainer() {
+export function Rentals() {
   const [activeStatus, setActiveStatus] = useState('Todos')
   const [rentals, setRentals] = useState<Rental[]>([])
   const [loading, setLoading] = useState(true)
@@ -55,7 +55,7 @@ export function RentalsContainer() {
 
       setRentals(response.data)
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 
@@ -83,23 +83,23 @@ export function RentalsContainer() {
       setRentals(data)
       setLoading(false)
     } catch (error) {
-      console.log(error)
+      console.error(error)
       setLoading(false)
     }
   }
 
   return (
     <main className="mb-8 mr-8 space-y-8">
-      <Status
+      <RentalFilters
         activeStatus={activeStatus}
         onChangeStatus={handleChangeStatus}
-        status={status}
+        status={rentalStatus}
       />
 
       {loading ? (
         <p className="mt-4 text-center">Carregando...</p>
       ) : (
-        <Rentals rentals={rentals} />
+        <RentalsTable rentals={rentals} />
       )}
     </main>
   )

@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from 'react'
 import { api } from '@/lib/axios'
-import { Loading } from './Loading'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import cookie from 'js-cookie'
+import { Loading } from '../Loading'
 
 const registerProductFormSchema = z.object({
   model: z.string().nonempty('O modelo é obrigatório'),
@@ -102,7 +102,7 @@ export function RegisterProductModal({
           setSizes(sizesResponse.data)
         },
       )
-      .catch((error) => console.log(error))
+      .catch((error) => console.error(error))
 
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') {
@@ -191,7 +191,7 @@ export function RegisterProductModal({
         return
       }
 
-      console.log({ error })
+      console.error(error)
     }
   }
 

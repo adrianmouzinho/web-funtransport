@@ -21,13 +21,9 @@ const signInUserFormSchema = z.object({
 
 type SignInUserFormData = z.infer<typeof signInUserFormSchema>
 
-interface TokenResponse {
-  token: string
-}
-
 export function SignInForm() {
   const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
   const {
@@ -39,30 +35,30 @@ export function SignInForm() {
   })
 
   async function signIn({ email, password }: SignInUserFormData) {
-    setLoading(true)
-
     try {
+      setIsLoading(true)
+
       const response = await api.post('/signIn', {
         email,
         password,
       })
 
-      const { token } = response.data as TokenResponse
+      const { token } = response.data
 
       cookie.set('token', token, { expires: 7, path: '/' })
 
-      setLoading(false)
+      setIsLoading(false)
 
-      return router.refresh()
+      return router.push('/')
     } catch (error: any) {
-      setLoading(false)
+      setIsLoading(false)
 
       if (error.response.status === 400) {
         setError(error.response.data.error)
         return
       }
 
-      console.log({ error })
+      console.error(error)
     }
   }
 
@@ -112,10 +108,10 @@ export function SignInForm() {
 
       <button
         type="submit"
-        disabled={loading}
+        disabled={isLoading}
         className="flex h-10 items-center justify-center rounded bg-zinc-900 font-semibold text-white transition-colors hover:bg-zinc-800"
       >
-        {loading ? <Loading /> : 'Entrar'}
+        {isLoading ? <Loading /> : 'Entrar'}
       </button>
     </form>
   )

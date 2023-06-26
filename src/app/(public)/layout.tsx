@@ -1,8 +1,6 @@
+import '../globals.css'
 import { ReactNode } from 'react'
 import { Inter } from 'next/font/google'
-import { cookies } from 'next/headers'
-import { Sidebar } from '@/components/Sidebar'
-import './globals.css'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -15,20 +13,10 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  const isAuthenticated = cookies().get('token')?.value
-
   return (
     <html lang="en">
       <body className={`${inter.className} overflow-x-hidden bg-zinc-50`}>
-        {isAuthenticated ? (
-          <div className="grid min-h-screen w-screen grid-cols-[304px_auto]">
-            <Sidebar />
-
-            {children}
-          </div>
-        ) : (
-          children
-        )}
+        {children}
       </body>
     </html>
   )

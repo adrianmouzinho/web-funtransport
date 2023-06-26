@@ -1,8 +1,8 @@
-import { formatDate } from '@/lib/formatDate'
-import { formatPrice } from '@/lib/formatPrice'
 import dayjs from 'dayjs'
+import { formatDateTime } from '@/utils/formatDateTime'
+import { formatNumberToRealCurrency } from '@/utils/formatNumberToRealCurrency'
 
-type RentalsProps = {
+type RentalsTableProps = {
   rentals: {
     id: string
     code: string
@@ -13,7 +13,7 @@ type RentalsProps = {
   }[]
 }
 
-export function Rentals({ rentals }: RentalsProps) {
+export function RentalsTable({ rentals }: RentalsTableProps) {
   return (
     <div className="rounded-lg border border-zinc-200 p-4">
       <table className="min-w-full table-auto p-8 text-sm">
@@ -37,17 +37,17 @@ export function Rentals({ rentals }: RentalsProps) {
               <td className=" px-4 py-2 text-left">{rental.code}</td>
               <td className=" px-4 py-2 text-left">{rental.duration} min</td>
               <td className=" px-4 py-2 text-left">
-                {formatPrice(rental.price / 100)}
+                {formatNumberToRealCurrency(rental.price / 100)}
               </td>
               <td className=" px-4 py-2 text-left">
                 {rental.status === 'Pendente'
                   ? 'Aguardando retirada'
-                  : formatDate(rental.createdAt)}
+                  : formatDateTime(rental.createdAt)}
               </td>
               <td className=" px-4 py-2 text-left">
                 {rental.status === 'Pendente'
                   ? 'Aguardando retirada'
-                  : formatDate(
+                  : formatDateTime(
                       dayjs(rental.createdAt)
                         .add(rental.duration, 'minute')
                         .toISOString(),

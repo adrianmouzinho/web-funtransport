@@ -1,6 +1,6 @@
+import { getUser } from '@/utils/getUser'
 import { LogOut, User } from 'lucide-react'
 import Image from 'next/image'
-import { getUser } from '@/lib/auth'
 
 interface HeaderProps {
   title: string

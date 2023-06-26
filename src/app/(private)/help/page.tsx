@@ -1,14 +1,6 @@
 import { Header } from '@/components/Header'
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
 
 export default function Help() {
-  const isAuthenticated = cookies().get('token')?.value
-
-  if (!isAuthenticated) {
-    return redirect('/signIn')
-  }
-
   return (
     <div className="max-h-screen overflow-y-scroll">
       <Header title="Ajuda" />

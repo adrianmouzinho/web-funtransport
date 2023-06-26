@@ -3,17 +3,25 @@
 import { FormEvent, useEffect, useState } from 'react'
 import cookie from 'js-cookie'
 import { api } from '@/lib/axios'
-import { Loading } from './Loading'
+import { Loading } from '../Loading'
+import { formatNumberToRealCurrency } from '@/utils/formatNumberToRealCurrency'
 
-interface ConfirmPickupModalProps {
+interface ConfirmReturnModalProps {
   isOpen: boolean
   onClose: () => void
 }
 
-export function ConfirmPickupModal({
+interface Response {
+  hasPendency: boolean
+  data: {
+    value: number
+  }
+}
+
+export function ConfirmReturnModal({
   isOpen,
   onClose,
-}: ConfirmPickupModalProps) {
+}: ConfirmReturnModalProps) {
   const [code, setCode] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
@@ -45,7 +53,7 @@ export function ConfirmPickupModal({
     return null
   }
 
-  async function confirmRentalPickup(event: FormEvent) {
+  async function confirmRentalReturn(event: FormEvent) {
     event.preventDefault()
 
     if (code.length !== 6) {
@@ -59,7 +67,7 @@ export function ConfirmPickupModal({
       const token = cookie.get('token')
 
       const response = await api.patch(
-        '/rentals/confirm/pickup',
+        '/rentals/confirm/return',
         {
           code,
         },
@@ -70,10 +78,20 @@ export function ConfirmPickupModal({
         },
       )
 
+      const { hasPendency, data } = response.data as Response
+
       if (response.status === 200) {
-        setSuccess(
-          `O status do aluguel de código ${code} foi alterado para ativo!`,
-        )
+        if (hasPendency) {
+          setSuccess(
+            `Esse aluguel gerou uma pendência no valor de ${formatNumberToRealCurrency(
+              data.value,
+            )}\nO status do aluguel de código ${code} foi alterado para concluído com atraso!`,
+          )
+        } else {
+          setSuccess(
+            `O status do aluguel de código ${code} foi alterado para concluído!`,
+          )
+        }
         setError(null)
       }
 
@@ -87,7 +105,7 @@ export function ConfirmPickupModal({
         return
       }
 
-      console.log({ error })
+      console.error(error)
     }
   }
 
@@ -101,7 +119,7 @@ export function ConfirmPickupModal({
   return (
     <div className="fixed left-0 top-0 flex h-screen w-screen items-center justify-center bg-black/75">
       <form
-        onSubmit={confirmRentalPickup}
+        onSubmit={confirmRentalReturn}
         className="flex w-full  max-w-xs flex-col gap-4  rounded-lg bg-white p-6"
       >
         <label className="flex flex-col gap-1 text-sm font-semibold">

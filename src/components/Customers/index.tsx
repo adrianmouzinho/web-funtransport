@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react'
 import cookie from 'js-cookie'
-import { api } from '@/lib/axios'
 import { User } from 'lucide-react'
 import Image from 'next/image'
+import { api } from '@/lib/axios'
 import { RegisterCustomerModal } from './RegisterCustomerModal'
 
 interface Customer {
@@ -33,7 +33,7 @@ export function Customers() {
 
       setCustomers(response.data)
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 

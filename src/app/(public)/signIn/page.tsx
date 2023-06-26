@@ -5,7 +5,7 @@ import { SignInForm } from '@/components/SignInForm'
 import logo from '@/assets/logo.svg'
 
 export default function SignIn() {
-  const isAuthenticated = cookies().get('token')?.value
+  const isAuthenticated = cookies().has('token')
 
   if (isAuthenticated) {
     return redirect('/')
@@ -23,3 +23,13 @@ export default function SignIn() {
     </div>
   )
 }
+
+// SignIn.getLayout = function getLayout(page: ReactElement) {
+//   return (
+//     <SignInLayout>
+//       <NestedLayout>{page}</NestedLayout>
+//     </SignInLayout>
+//   )
+// }
+
+// export default SignIn

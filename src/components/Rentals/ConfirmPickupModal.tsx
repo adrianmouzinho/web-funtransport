@@ -3,25 +3,16 @@
 import { FormEvent, useEffect, useState } from 'react'
 import cookie from 'js-cookie'
 import { api } from '@/lib/axios'
-import { formatPrice } from '@/lib/formatPrice'
-import { Loading } from './Loading'
-
-interface ConfirmReturnModalProps {
+import { Loading } from '../Loading'
+interface ConfirmPickupModalProps {
   isOpen: boolean
   onClose: () => void
 }
 
-interface Response {
-  hasPendency: boolean
-  data: {
-    value: number
-  }
-}
-
-export function ConfirmRentalReturn({
+export function ConfirmPickupModal({
   isOpen,
   onClose,
-}: ConfirmReturnModalProps) {
+}: ConfirmPickupModalProps) {
   const [code, setCode] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
@@ -53,7 +44,7 @@ export function ConfirmRentalReturn({
     return null
   }
 
-  async function confirmRentalReturn(event: FormEvent) {
+  async function confirmRentalPickup(event: FormEvent) {
     event.preventDefault()
 
     if (code.length !== 6) {
@@ -67,7 +58,7 @@ export function ConfirmRentalReturn({
       const token = cookie.get('token')
 
       const response = await api.patch(
-        '/rentals/confirm/return',
+        '/rentals/confirm/pickup',
         {
           code,
         },
@@ -78,20 +69,10 @@ export function ConfirmRentalReturn({
         },
       )
 
-      const { hasPendency, data } = response.data as Response
-
       if (response.status === 200) {
-        if (hasPendency) {
-          setSuccess(
-            `Esse aluguel gerou uma pendência no valor de ${formatPrice(
-              data.value,
-            )}\nO status do aluguel de código ${code} foi alterado para concluído com atraso!`,
-          )
-        } else {
-          setSuccess(
-            `O status do aluguel de código ${code} foi alterado para concluído!`,
-          )
-        }
+        setSuccess(
+          `O status do aluguel de código ${code} foi alterado para ativo!`,
+        )
         setError(null)
       }
 
@@ -105,7 +86,7 @@ export function ConfirmRentalReturn({
         return
       }
 
-      console.log({ error })
+      console.error(error)
     }
   }
 
@@ -119,7 +100,7 @@ export function ConfirmRentalReturn({
   return (
     <div className="fixed left-0 top-0 flex h-screen w-screen items-center justify-center bg-black/75">
       <form
-        onSubmit={confirmRentalReturn}
+        onSubmit={confirmRentalPickup}
         className="flex w-full  max-w-xs flex-col gap-4  rounded-lg bg-white p-6"
       >
         <label className="flex flex-col gap-1 text-sm font-semibold">

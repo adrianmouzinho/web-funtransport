@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { api } from '@/lib/axios'
-import { Loading } from './Loading'
+import { Loading } from '../Loading'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -119,7 +119,7 @@ export function RegisterCustomerModal({
         return
       }
 
-      console.log({ error })
+      console.error(error)
     }
   }
 
