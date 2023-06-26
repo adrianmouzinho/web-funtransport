@@ -13,23 +13,20 @@ export default function SignIn() {
 
   return (
     <div className="flex h-screen w-screen items-center justify-center">
-      <div className="flex w-full max-w-xs flex-col gap-8 rounded-lg bg-zinc-50 p-6">
+      <div className="flex w-full max-w-sm flex-col gap-8 rounded-lg border border-zinc-200 bg-zinc-50 px-10 py-12">
         <Image src={logo} alt="Logo da Funtransport" className="mx-auto" />
 
-        <h2 className="text-center font-semibold">Acesse a plataforma</h2>
+        <div className="space-y-4 text-center">
+          <h2 className="text-xl font-semibold">
+            Bem-vindo(a) à Área de Atendentes
+          </h2>
+          <span className="text-xs text-zinc-500">
+            Entre para ter acesso a sua conta
+          </span>
+        </div>
 
         <SignInForm />
       </div>
     </div>
   )
 }
-
-// SignIn.getLayout = function getLayout(page: ReactElement) {
-//   return (
-//     <SignInLayout>
-//       <NestedLayout>{page}</NestedLayout>
-//     </SignInLayout>
-//   )
-// }
-
-// export default SignIn

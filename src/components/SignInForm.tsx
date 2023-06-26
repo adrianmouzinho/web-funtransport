@@ -85,8 +85,8 @@ export function SignInForm() {
       <label className="flex flex-col gap-1 text-sm font-semibold">
         <span className="flex items-center justify-between">
           Senha
-          <a href="" className="text-blue-600 hover:underline">
-            Esqueceu sua senha?
+          <a href="" className="font-medium text-pink-600 hover:underline">
+            esqueci minha senha
           </a>
         </span>
 
@@ -109,7 +109,7 @@ export function SignInForm() {
       <button
         type="submit"
         disabled={isLoading}
-        className="flex h-10 items-center justify-center rounded bg-zinc-900 font-semibold text-white transition-colors hover:bg-zinc-800"
+        className="mt-4 flex h-10 items-center justify-center rounded bg-zinc-900 font-semibold text-white transition-colors hover:bg-zinc-800"
       >
         {isLoading ? <Loading /> : 'Entrar'}
       </button>
